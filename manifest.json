@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cezaraugusto/chrome-extension-manifest-json-schema/refs/heads/main/manifest/manifest.schema.v3.json",
+  "manifest_version": 3,
+  "name": "AI Unified Hotkeys",
+  "version": "1.0.0",
+  "description": "Have unified hotkeys for all AI chatbots your use!",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://chatgpt.com/*", "*://gemini.google.com/*", "*://claude.ai/*"],
+      "js": ["js/content.js", "js/constants.js"]
+    }
+  ]
+}
