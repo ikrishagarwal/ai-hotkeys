@@ -1,9 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/cezaraugusto/chrome-extension-manifest-json-schema/refs/heads/main/manifest/manifest.schema.v3.json",
   "manifest_version": 3,
-  "name": "AI Unified Hotkeys",
+  "name": "AI Unified Hotkeys (Gemini, ChatGPT, Claude)",
+  "short_name": "AI  Hotkeys",
   "version": "1.0.0",
-  "description": "Have unified hotkeys for all AI chatbots your use!",
+  "description": "Unified hotkeys (keyboard shortcuts) for AI chatbots such as Gemini, Claude, ChatGPT, along with tweaks for better productivity.",
   "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup/popup.html"
@@ -13,5 +14,6 @@
       "matches": ["*://chatgpt.com/*", "*://gemini.google.com/*", "*://claude.ai/*"],
       "js": ["js/content.js", "js/constants.js"]
     }
-  ]
+  ],
+  "author": "Krish"
 }
