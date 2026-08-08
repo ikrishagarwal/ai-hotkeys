@@ -34,6 +34,16 @@ function clickButton(buttonQuery) {
   }
 }
 
+let autoFocusEnabled = true;
+chrome.storage.sync.get({ autoFocus: true }, (data) => {
+  autoFocusEnabled = data.autoFocus !== false;
+});
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "sync" && "autoFocus" in changes) {
+    autoFocusEnabled = changes.autoFocus.newValue !== false;
+  }
+});
+
 window.addEventListener(
   "keydown",
   (event) => {
@@ -51,9 +61,12 @@ window.addEventListener(
     if (event.metaKey) currentCombo.push("Meta");
 
     if (currentCombo.length === 0 || (currentCombo.length === 1 && currentCombo.at(0) === "Shift")) {
-      const textarea = document.querySelector(mappings[platform].searchBox);
-      if (textarea && document.activeElement !== textarea) {
-        focusAndMoveCursorToEnd(textarea);
+      console.log(`[AI HOTKEY] Auto focus triggered ${autoFocusEnabled}`);
+      if (autoFocusEnabled) {
+        const textarea = document.querySelector(mappings[platform].searchBox);
+        if (textarea && document.activeElement !== textarea) {
+          focusAndMoveCursorToEnd(textarea);
+        }
       }
       return;
     }

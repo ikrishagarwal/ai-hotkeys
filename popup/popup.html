@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Unified Hotkeys</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Hotkeys</h1>
+      <p class="subtitle">Click a pre-present key combination and press a key combo to change it.</p>
+    </header>
+
+    <main>
+      <div id="content"></div>
+      <p class="error" data-role="error"></p>
+    </main>
+
+    <footer>
+      <span class="flex-spacer"></span>
+      <button type="button" class="reset" data-role="reset">Reset to Defaults</button>
+      <button type="button" class="save" data-role="save">Save</button>
+    </footer>
+
+    <script src="../js/constants.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
