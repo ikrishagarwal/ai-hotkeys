@@ -6,6 +6,7 @@ const CONFIGS = {
   },
   disabled: [],
   autoFocus: true,
+  disclaimer: true,
 };
 
 const INFO = [

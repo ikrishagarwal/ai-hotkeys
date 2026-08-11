@@ -42,6 +42,20 @@ function init() {
   `;
   content.appendChild(toggleRow);
 
+  const disclaimerRow = document.createElement("div");
+  disclaimerRow.className = "row";
+  disclaimerRow.innerHTML = `
+    <div class="label">
+      <div class="title">Hide disclaimer text</div>
+      <div class="desc">Remove the disclaimer message under the chat input.</div>
+    </div>
+    <label class="switch" title="Toggle disclaimer">
+      <input type="checkbox" data-role="disclaimer" />
+      <span class="track"><span class="thumb"></span></span>
+    </label>
+  `;
+  content.appendChild(disclaimerRow);
+
   document.querySelectorAll('[data-role="capture"]').forEach((el) => {
     el.addEventListener("click", () => {
       if (recording === el) {
@@ -88,6 +102,11 @@ function init() {
     chrome.storage.sync.set({ autoFocus: autoFocusToggle.checked });
   });
 
+  const disclaimerToggle = document.querySelector('[data-role="disclaimer"]');
+  disclaimerToggle.addEventListener("change", () => {
+    chrome.storage.sync.set({ disclaimer: disclaimerToggle.checked });
+  });
+
   chrome.storage.sync.get(CONFIGS, (data) => {
     disabledActions = Array.isArray(data.disabled) ? data.disabled : [];
     binding = { ...CONFIGS.hotkeys, ...data.hotkeys };
@@ -95,6 +114,7 @@ function init() {
       if (disabledActions.includes(binding[combo])) delete binding[combo];
     }
     autoFocusToggle.checked = data.autoFocus !== false;
+    disclaimerToggle.checked = data.disclaimer !== false;
     render();
   });
 }
@@ -213,7 +233,7 @@ function render() {
     const captureEl = row.querySelector('[data-role="capture"]');
 
     if (recording !== captureEl) renderKeyGroup(captureEl, combo);
-    captureEl.classList.toggle("is-disabled", !combo);
+    if (captureEl) captureEl.classList.toggle("is-disabled", !combo);
     row.classList.toggle("is-disabled", !combo);
   });
 }
@@ -235,9 +255,7 @@ function save(event) {
   }
 
   if (invalid.length) {
-    showError(
-      `${invalid.join(", ")} need a modifier (Ctrl/Shift/Alt/Meta) and was not saved.`
-    );
+    showError(`${invalid.join(", ")} need a modifier (Ctrl/Shift/Alt/Meta) and was not saved.`);
     return;
   }
 
@@ -259,9 +277,8 @@ function reset(event) {
   disabledActions = [];
   const autoFocusToggle = document.querySelector('[data-role="autofocus"]');
   if (autoFocusToggle) autoFocusToggle.checked = true;
+  const disclaimerToggle = document.querySelector('[data-role="disclaimer"]');
+  if (disclaimerToggle) disclaimerToggle.checked = true;
   render();
-  chrome.storage.sync.set(
-    { hotkeys: binding, disabled: disabledActions, autoFocus: true },
-    () => window.close()
-  );
+  chrome.storage.sync.set(CONFIGS, () => window.close());
 }

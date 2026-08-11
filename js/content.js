@@ -4,6 +4,8 @@ const mappings = {
     uploadFiles: "#base-ui-_r_b9_",
     searchChats: '[aria-label="Search"]',
     searchBox: '[contenteditable="true"]',
+    disclaimer: "[data-disclaimer]",
+    inputArea: "fieldset",
   },
   gemini: {
     openIncognito: '[aria-label="Temporary chat"]',
@@ -18,12 +20,15 @@ const mappings = {
     },
     searchChats: '[aria-label="Search chats"]',
     searchBox: 'rich-textarea [contenteditable="true"], .ql-editor',
+    disclaimer: "[data-test-id='disclaimer']",
+    inputArea: "fieldset",
   },
   chatgpt: {
     openIncognito: '[aria-label="Turn on temporary chat"]',
     uploadFiles: "#upload-photos",
     searchChats: '[aria-label="Search"]',
     searchBox: "#prompt-textarea",
+    disclaimer: "[data-testid='thread-disclaimer']",
   },
 };
 
@@ -38,11 +43,42 @@ let autoFocusEnabled = true;
 chrome.storage.sync.get({ autoFocus: true }, (data) => {
   autoFocusEnabled = data.autoFocus !== false;
 });
+
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "sync" && "autoFocus" in changes) {
     autoFocusEnabled = changes.autoFocus.newValue !== false;
   }
 });
+
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  init();
+} else {
+  window.addEventListener("DOMContentLoaded", init);
+}
+
+function init() {
+  chrome.storage.sync.get("disclaimer", (data) => {
+    if (data.disclaimer !== false) {
+      const platform = window.location.hostname.includes("claude")
+        ? "claude"
+        : window.location.hostname.includes("gemini")
+          ? "gemini"
+          : "chatgpt";
+
+      const disclaimerSelector = mappings[platform].disclaimer;
+      const inputArea = mappings[platform].inputArea;
+      if (disclaimerSelector) {
+        const style = document.createElement("style");
+        style.textContent = `${disclaimerSelector} { display: none !important; }`;
+        if (inputArea) {
+          style.textContent += ` ${inputArea} { margin-bottom: 0.8rem !important; }`;
+        }
+        document.head.appendChild(style);
+        console.log(`[AI HOTKEY] Injected CSS to hide disclaimer on ${platform}`);
+      }
+    }
+  });
+}
 
 window.addEventListener(
   "keydown",
