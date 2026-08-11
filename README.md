@@ -30,6 +30,7 @@ Yeah, me too and that's why we have **AI Unified Hotkeys**.
 - **Universal Incognito/Temporary Chat:** Trigger temporary or incognito chats without hunting for the UI button.
 - **Quick Uploads:** Open the file upload dialog with a single keystroke.
 - **Search Chats:** Quickly search through your chat history without leaving the keyboard.
+- **Remove unwanted disclaimers**: Removes the "AI can make mistakes" disclaimers to give you a little extra working space.
 
 ## Supported Platforms
 
@@ -39,6 +40,7 @@ Yeah, me too and that's why we have **AI Unified Hotkeys**.
 | **File Upload**     | ✅      | ✅     | ✅     |
 | **Search Chats**    | ✅      | ✅     | ✅     |
 | **Autofocus Input** | ✅      | ✅     | ✅     |
+| **Hide Disclaimer** | ✅      | ✅     | ✅     |
 
 ## Author
 
