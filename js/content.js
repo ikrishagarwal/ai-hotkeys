@@ -61,8 +61,7 @@ window.addEventListener(
     if (event.metaKey) currentCombo.push("Meta");
 
     if (currentCombo.length === 0 || (currentCombo.length === 1 && currentCombo.at(0) === "Shift")) {
-      console.log(`[AI HOTKEY] Auto focus triggered ${autoFocusEnabled}`);
-      if (autoFocusEnabled) {
+      if (!isTypingInInput() && autoFocusEnabled) {
         const textarea = document.querySelector(mappings[platform].searchBox);
         if (textarea && document.activeElement !== textarea) {
           focusAndMoveCursorToEnd(textarea);
@@ -115,4 +114,46 @@ function focusAndMoveCursorToEnd(element) {
     selection.removeAllRanges();
     selection.addRange(range);
   }
+}
+
+function isTypingInInput() {
+  let activeEl = document.activeElement;
+  while (activeEl && activeEl.shadowRoot && activeEl.shadowRoot.activeElement) {
+    activeEl = activeEl.shadowRoot.activeElement;
+  }
+
+  if (!activeEl) return false;
+
+  if (activeEl.isContentEditable) {
+    return true;
+  }
+
+  const tagName = activeEl.tagName.toUpperCase();
+
+  if (tagName === "TEXTAREA") {
+    return true;
+  }
+
+  if (tagName === "INPUT") {
+    const type = activeEl.type.toLowerCase();
+
+    const validTextTypes = [
+      "text",
+      "password",
+      "number",
+      "email",
+      "tel",
+      "url",
+      "search",
+      "date",
+      "datetime-local",
+      "month",
+      "week",
+      "time",
+    ];
+
+    return validTextTypes.includes(type);
+  }
+
+  return false;
 }
