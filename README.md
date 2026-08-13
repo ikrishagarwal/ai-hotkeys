@@ -6,10 +6,10 @@
 
 <div align="center">
 
-![GitHub Repo stars](https://img.shields.io/github/stars/ikrishagarwal/ai-hotkeys?style=for-the-badge&color=ffd700)
-![GitHub forks](https://img.shields.io/github/forks/ikrishagarwal/ai-hotkeys?style=for-the-badge&color=blue)
-![GitHub issues](https://img.shields.io/github/issues/ikrishagarwal/ai-hotkeys?style=for-the-badge&color=red)
-![GitHub License](https://img.shields.io/github/license/ikrishagarwal/ai-hotkeys?style=for-the-badge)
+![GitHub Repo stars](https://img.shields.io/github/stars/ikrishagarwal/ai-hotkeys?style=for-the-badge&color=ffd700&)
+![GitHub forks](https://img.shields.io/github/forks/ikrishagarwal/ai-hotkeys?style=for-the-badge&color=blue&)
+![GitHub issues](https://img.shields.io/github/issues/ikrishagarwal/ai-hotkeys?style=for-the-badge&color=red&)
+![GitHub License](https://img.shields.io/github/license/ikrishagarwal/ai-hotkeys?style=for-the-badge&)
 
 **Setup keyboard shortcuts once and use them everywhere with other UI tweaks for maximum productivity.** 🚀
 
