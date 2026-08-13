@@ -1,8 +1,8 @@
-<center>
-
-# ⌨️ AI Unified Hotkeys
-
-</center>
+<div align="center">
+  <img alt="logo" src="images/1024x1024.png" width="128" />
+  <br />
+  <h1>AI Unified Hotkeys</h1>
+</div>
 
 <div align="center">
 
