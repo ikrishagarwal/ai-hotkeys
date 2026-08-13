@@ -1,0 +1,36 @@
+name: Attach the extension ZIP to the release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Create release archive
+        run: zip ai-hotkeys.zip -r images js popup *.md manifest.json
+
+      - name: Attest build provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: "ai-hotkeys.zip"
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+
+          gh release create "$tag" \
+            --title="$tag" \
+            --draft \
+            --generate-notes \
+            ai-hotkeys.zip
