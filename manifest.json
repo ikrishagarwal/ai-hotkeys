@@ -3,9 +3,9 @@
   "manifest_version": 3,
   "name": "AI Unified Hotkeys (Gemini, ChatGPT, Claude)",
   "short_name": "AI  Hotkeys",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unified hotkeys (keyboard shortcuts) for AI chatbots such as Gemini, Claude, ChatGPT, along with tweaks for better productivity.",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
