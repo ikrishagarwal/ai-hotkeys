@@ -30,6 +30,7 @@ function init() {
 
   const toggleRow = document.createElement("div");
   toggleRow.className = "row";
+  toggleRow.dataset.togglefor = "autoFocus";
   toggleRow.innerHTML = `
     <div class="label">
       <div class="title">Auto-focus chat input</div>
@@ -44,6 +45,7 @@ function init() {
 
   const disclaimerRow = document.createElement("div");
   disclaimerRow.className = "row";
+  disclaimerRow.dataset.togglefor = "disclaimer";
   disclaimerRow.innerHTML = `
     <div class="label">
       <div class="title">Hide disclaimer text</div>
@@ -229,6 +231,13 @@ function getComboFor(action) {
 function render() {
   document.querySelectorAll(".row").forEach((row) => {
     const action = row.dataset.action;
+    if (!action) {
+      const toggleFor = row.dataset.togglefor;
+      chrome.storage.sync.get(CONFIGS, (data) => {
+        if (data[toggleFor] !== true) row.classList.add("is-disabled");
+      });
+      return;
+    }
     const combo = getComboFor(action);
     const captureEl = row.querySelector('[data-role="capture"]');
 
