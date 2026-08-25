@@ -28,7 +28,7 @@ const mappings = {
     uploadFiles: "#upload-photos",
     searchChats: '[aria-label="Search"]',
     searchBox: "#prompt-textarea",
-    disclaimer: "[data-testid='thread-disclaimer']",
+    disclaimer: ["[data-mobile-disclosure-thread-end]", "[data-testid='thread-disclaimer']"],
   },
 };
 
@@ -69,7 +69,14 @@ function init() {
       const inputArea = mappings[platform].inputArea;
       if (disclaimerSelector) {
         const style = document.createElement("style");
-        style.textContent = `${disclaimerSelector} { display: none !important; }`;
+        if (typeof disclaimerSelector === "object" && Array.isArray(disclaimerSelector)) {
+          style.textContent = disclaimerSelector
+            .map((selector) => `${selector} { display: none !important; }`)
+            .join(" ");
+        } else {
+          const style = document.createElement("style");
+          style.textContent = `${disclaimerSelector} { display: none !important; }`;
+        }
         if (inputArea) {
           style.textContent += ` ${inputArea} { margin-bottom: 0.8rem !important; }`;
         }
