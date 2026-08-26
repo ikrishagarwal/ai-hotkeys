@@ -102,7 +102,14 @@ window.addEventListener(
     if (event.altKey) currentCombo.push("Alt");
     if (event.metaKey) currentCombo.push("Meta");
 
-    if (currentCombo.length === 0 || (currentCombo.length === 1 && currentCombo.at(0) === "Shift")) {
+    if (
+      currentCombo.length === 0 ||
+      (currentCombo.length === 1 && event.shiftKey) ||
+      (currentCombo.length === 1 && event.ctrlKey && event.key.toLowerCase() === "v") ||
+      (currentCombo.length === 1 && event.metaKey && event.key.toLowerCase() === "v") ||
+      (currentCombo.length === 2 && event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "v") ||
+      (currentCombo.length === 2 && event.metaKey && event.shiftKey && event.key.toLowerCase() === "v")
+    ) {
       if (!isTypingInInput() && autoFocusEnabled) {
         const textarea = document.querySelector(mappings[platform].searchBox);
         if (textarea && document.activeElement !== textarea) {
