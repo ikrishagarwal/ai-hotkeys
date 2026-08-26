@@ -20,7 +20,7 @@ const mappings = {
     },
     searchChats: '[aria-label="Search chats"]',
     searchBox: 'rich-textarea [contenteditable="true"], .ql-editor',
-    disclaimer: "[data-test-id='disclaimer']",
+    disclaimer: ["[data-test-id='disclaimer']", "hallucination-disclaimer"],
     inputArea: "fieldset",
   },
   chatgpt: {
@@ -67,14 +67,13 @@ function init() {
 
       const disclaimerSelector = mappings[platform].disclaimer;
       const inputArea = mappings[platform].inputArea;
-      if (disclaimerSelector) {
+      if (disclaimerSelector.length > 0) {
         const style = document.createElement("style");
         if (typeof disclaimerSelector === "object" && Array.isArray(disclaimerSelector)) {
           style.textContent = disclaimerSelector
             .map((selector) => `${selector} { display: none !important; }`)
             .join(" ");
-        } else {
-          const style = document.createElement("style");
+        } else if (typeof disclaimerSelector === "string") {
           style.textContent = `${disclaimerSelector} { display: none !important; }`;
         }
         if (inputArea) {
